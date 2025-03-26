@@ -4,9 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import FlipGroupSwiper from "../components/menu-section";
 import HomeBackground from "../components/parallax-background";
-import ReserverSection from "@/components/contact-section";
 import InformationSection from "../components/information-section";
 import ContactSection from "@/components/contact-section";
+import ReserveSection from "@/components/reserve-section";
 
 export default function Home() {
   return (
@@ -65,14 +65,17 @@ export default function Home() {
       </section>
 
       <section
-        className="w-full bg-neutral-500 py-8 relative pt-32"
+        className="w-full bg-white py-8 relative pt-32"
         id="Reserve"
       >
-        Reserve
-        <ReserverSection />
+        <div className="text-2xl text-black flex justify-center items-center mb-4">
+        Reservation
+        </div>
+        
+        <ReserveSection />
       </section>
 
-      <section className="w-full bg-white py-8 relative pt-32" id="Contact">
+      <section className="w-full bg-neutral-500 py-8 relative pt-32" id="Contact">
         <div className="flex justify-center items-center text-2xl font-bold mb-12 text-black">
           Information
         </div>
@@ -85,15 +88,15 @@ export default function Home() {
       </section>
 
       <section
-        className="w-full bg-neutral-500 py-8 relative pt-32"
+        className="w-full bg-white py-8 relative pt-32"
         id="Contact"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 p-4">
           <div className="flex flex-col justify-center items-center text-center p-6">
-            <div className="text-2xl font-semibold mb-4 text-white">
+            <div className="text-2xl font-semibold mb-4 text-black">
               Contact
             </div>
-            <div className="text-white w-94">
+            <div className="text-black w-94">
               Jangan Ragu untuk memberitahukan kepada kami mengenai keinginan
               anda terhadap pelayanan kami. Kami akan menanggapinya dengan penuh
               sukacita, Silahkan Tinggalkan Pesan anda.
@@ -103,6 +106,18 @@ export default function Home() {
           <ContactSection />
         </div>
       </section>
+
+      <footer className="relative z-20 bg-neutral-300 text-black p-8">
+        <div className="flex justify-between">
+        <div>
+        © 2018 Pondok Gading Resto. All Rights Reserved.
+        </div>
+        <div>
+
+        </div>
+
+        </div>
+      </footer>
     </main>
   );
 }
