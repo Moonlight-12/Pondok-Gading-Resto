@@ -8,6 +8,14 @@ import InformationSection from "../components/information-section";
 import ContactSection from "@/components/contact-section";
 import ReserveSection from "@/components/reserve-section";
 
+//to do:
+// - Gallery page
+// - Make the Navbar scroll to the section
+// - Include available rooms
+// - change color to black, gold and white
+// - change Logo
+
+
 export default function Home() {
   return (
     <main>
