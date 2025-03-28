@@ -15,14 +15,6 @@ type ReservationData = {
 }
 
 export async function sendReservationEmail(formData: ReservationData) {
-  // Log all environment variables (carefully)
-  console.log("EMAIL CONFIGURATION CHECK:");
-  console.log("EMAIL_USER:", process.env.EMAIL_USER ? 'PRESENT' : 'MISSING');
-  console.log("EMAIL_PASSWORD:", process.env.EMAIL_PASSWORD ? 'PRESENT (REDACTED)' : 'MISSING');
-  console.log("EMAIL_HOST:", process.env.EMAIL_HOST);
-  console.log("EMAIL_PORT:", process.env.EMAIL_PORT);
-  console.log("EMAIL_SECURE:", process.env.EMAIL_SECURE);
-
   try {
     // Validate credentials explicitly
     if (!process.env.EMAIL_USER) {

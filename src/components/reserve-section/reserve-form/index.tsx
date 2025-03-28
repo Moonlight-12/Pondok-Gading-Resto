@@ -72,7 +72,6 @@ export default function ReserveForm() {
 
   return (
     <div className="bg-neutral-400 rounded-lg shadow-md text-black p-8 max-w-4xl mx-auto">
-      <h2 className="text-2xl font-bold text-center mb-6">Reservation</h2>
       <Toaster position="top-center" />
 
       <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-6">

@@ -14,6 +14,7 @@ import ReserveSection from "@/components/reserve-section";
 // - Include available rooms
 // - change color to black, gold and white
 // - change Logo
+// - Fix typing in reserve form
 
 
 export default function Home() {
@@ -73,7 +74,7 @@ export default function Home() {
       </section>
 
       <section
-        className="w-full bg-white py-8 relative pt-32"
+        className="w-full bg-white relative py-40"
         id="Reserve"
       >
         <div className="text-2xl text-black flex justify-center items-center mb-4">
@@ -83,7 +84,7 @@ export default function Home() {
         <ReserveSection />
       </section>
 
-      <section className="w-full bg-neutral-500 py-8 relative pt-32" id="Contact">
+      <section className="w-full bg-neutral-500 py-40 relative" id="Contact">
         <div className="flex justify-center items-center text-2xl font-bold mb-12 text-black">
           Information
         </div>
@@ -96,7 +97,7 @@ export default function Home() {
       </section>
 
       <section
-        className="w-full bg-white py-8 relative pt-32"
+        className="w-full bg-white py-40 relative"
         id="Contact"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 p-4">
