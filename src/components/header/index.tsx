@@ -121,7 +121,7 @@ export default function Header() {
       </nav>
 
       <nav
-        className={`flex flex-col md:flex-row gap-4 md:gap-8 justify-center py-3 px-4 transition-all duration-300 fixed top-0 w-full z-50
+        className={`flex flex-col md:flex-row gap-4 md:gap-8 md:justify-center py-3 px-4 transition-all duration-300 fixed top-0 w-full z-50
           ${
             showStickyNav
               ? "opacity-100 pointer-events-auto bg-neutral-400/80 backdrop-blur-sm shadow-lg"
@@ -157,7 +157,7 @@ export default function Header() {
         <div
           className={`${
             showMobileMenu && showStickyNav ? "flex" : "hidden"
-          } md:flex flex-col md:flex-row items-center gap-4 md:gap-8 w-full`}
+          } md:flex flex-col md:flex-row items-center md:justify-center gap-4 md:gap-8 w-full`}
         >
           <a
             href="/#Home"

@@ -9,7 +9,9 @@ export function GalleryOptions() {
       <Link href={"/gallery/food-gallery"}>
         <FoodOptions />
       </Link>
-      <DrinkOptions />
+      <Link href={"/gallery/drink-gallery"}>
+        <DrinkOptions />
+      </Link>
       <Link href={"/gallery/ambience-gallery"}>
         <AmbienceOptions />
       </Link>
