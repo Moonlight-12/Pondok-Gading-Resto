@@ -15,6 +15,8 @@ import ReserveSection from "@/components/reserve-section";
 // - change color to black, gold and white
 // - change Logo
 // - Fix typing in reserve form
+// - Mobile view header
+// - Add social media
 
 
 export default function Home() {

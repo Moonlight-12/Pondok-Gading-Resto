@@ -18,7 +18,7 @@ export default function Header() {
   return (
     <>
       <header className="flex flex-col z-40 items-center justify-center p-6 w-full relative bg-transparent">
-        <div className="text-4xl font-bold text-red-400">
+        <div className="text-4xl font-bold text-[#FFD700]">
           Pondok Gading Resto
         </div>
       </header>
@@ -28,19 +28,19 @@ export default function Header() {
           showStickyNav ? "opacity-0" : "opacity-100"
         } transition-opacity duration-300`}
       >
-        <a href="#Home" className="py-2 hover:text-gray-600">
+        <a href="/#Home" className="py-2 hover:text-gray-600">
           Home
         </a>
-        <a href="#About" className="py-2 hover:text-gray-600">
+        <a href="/#About" className="py-2 hover:text-gray-600">
           About
         </a>
-        <a href="#Menu" className="py-2 hover:text-gray-600">
+        <a href="/#Menu" className="py-2 hover:text-gray-600">
           Menu
         </a>
-        <a href="#Contact" className="py-2 hover:text-gray-600">
+        <a href="/#Contact" className="py-2 hover:text-gray-600">
           Contact
         </a>
-        <a href="#Reserve" className="py-2 hover:text-gray-600">
+        <a href="/#Reserve" className="py-2 hover:text-gray-600">
           Reserve
         </a>
         <a href="/gallery" className="py-2 hover:text-gray-600">
@@ -56,19 +56,19 @@ export default function Header() {
               : "opacity-0 pointer-events-none"
           }`}
       >
-        <a href="#Home" className="py-2 hover:text-gray-600">
+        <a href="/#Home" className="py-2 hover:text-gray-600">
           Home
         </a>
-        <a href="#About" className="py-2 hover:text-gray-600">
+        <a href="/#About" className="py-2 hover:text-gray-600">
           About
         </a>
-        <a href="#Menu" className="py-2 hover:text-gray-600">
+        <a href="/#Menu" className="py-2 hover:text-gray-600">
           Menu
         </a>
-        <a href="#Contact" className="py-2 hover:text-gray-600">
+        <a href="/#Contact" className="py-2 hover:text-gray-600">
           Contact
         </a>
-        <a href="#Reserve" className="py-2 hover:text-gray-600">
+        <a href="/#Reserve" className="py-2 hover:text-gray-600">
           Reserve
         </a>
         <a href="/gallery" className="py-2 hover:text-gray-600">
