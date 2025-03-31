@@ -11,11 +11,9 @@ import ReserveSection from "@/components/reserve-section";
 //to do:
 // - Gallery page
 // - Make the Navbar scroll to the section
-// - Include available rooms
 // - change color to black, gold and white
 // - change Logo
 // - Fix typing in reserve form
-// - Mobile view header
 // - Add social media
 
 
