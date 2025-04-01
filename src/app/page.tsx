@@ -2,7 +2,6 @@ import Header from "../components/header";
 import AboutUsButton from "../components/about-us-button";
 import Link from "next/link";
 import Image from "next/image";
-import FlipGroupSwiper from "../components/menu-section";
 import HomeBackground from "../components/parallax-background";
 import InformationSection from "../components/information-section";
 import ContactSection from "@/components/contact-section";
@@ -10,12 +9,11 @@ import ReserveSection from "@/components/reserve-section";
 import MenuSlider from "@/components/menu-slider";
 
 //to do:
-// - Make the Navbar scroll to the section
-// - change color to black, gold and white
 // - change Logo
-// - Fix typing in reserve form
 // - Add social media
-
+// - Rooms pictures
+// - set limits to the reservation form
+// - add timeout to the reservation form to prevent spamming
 
 export default function Home() {
   return (
@@ -120,7 +118,7 @@ export default function Home() {
       <footer className="relative z-20 bg-neutral-300 text-black p-8">
         <div className="flex justify-between">
         <div>
-        © 2018 Pondok Gading Resto. All Rights Reserved.
+        © 2025 Pondok Gading Resto. All Rights Reserved.
         </div>
         <div>
 

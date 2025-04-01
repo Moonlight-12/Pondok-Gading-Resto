@@ -1,10 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function Header() {
   const [showStickyNav, setShowStickyNav] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
+  const isHomePage = pathname === "/" || pathname.startsWith("/#");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,6 +18,38 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useEffect(() => {
+    const scrollToHashElement = () => {
+      const hash = window.location.hash;
+      if (hash && isHomePage) {
+        setTimeout(() => {
+          const element = document.querySelector(hash);
+          if (element) {
+            element.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 300);
+      }
+    };
+
+    scrollToHashElement();
+
+    window.addEventListener("hashchange", scrollToHashElement);
+    return () => {
+      window.removeEventListener("hashchange", scrollToHashElement);
+    };
+  }, [isHomePage]);
+
+  const handleNavClick = (id: string) => {
+    if (isHomePage) {
+      const section = document.querySelector(id);
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      router.push(`/${id}`);
+    }
+  };
 
   return (
     <>
@@ -57,30 +93,55 @@ export default function Header() {
           <div className="md:hidden absolute top-full left-0 right-0 w-full z-50 flex flex-col items-center gap-4 mt-0 bg-neutral-400/80 backdrop-blur-sm shadow-lg p-4">
             <a
               href="/#Home"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClick("#Home");
+                setShowMobileMenu(false);
+              }}
               className="py-2 hover:text-gray-600 w-full text-center"
             >
               Home
             </a>
             <a
               href="/#About"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClick("#About");
+                setShowMobileMenu(false);
+              }}
               className="py-2 hover:text-gray-600 w-full text-center"
             >
               About
             </a>
             <a
               href="/#Menu"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClick("#Menu");
+                setShowMobileMenu(false);
+              }}
               className="py-2 hover:text-gray-600 w-full text-center"
             >
               Menu
             </a>
             <a
               href="/#Contact"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClick("#Contact");
+                setShowMobileMenu(false);
+              }}
               className="py-2 hover:text-gray-600 w-full text-center"
             >
               Contact
             </a>
             <a
               href="/#Reserve"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClick("#Reserve");
+                setShowMobileMenu(false);
+              }}
               className="py-2 hover:text-gray-600 w-full text-center"
             >
               Reserve
@@ -100,19 +161,54 @@ export default function Header() {
           showStickyNav ? "opacity-0" : "opacity-100"
         } transition-opacity duration-300`}
       >
-        <a href="/#Home" className="py-2 hover:text-gray-600">
+        <a
+          href="/#Home"
+          onClick={(e) => {
+            e.preventDefault();
+            handleNavClick("#Home");
+          }}
+          className="py-2 hover:text-gray-600"
+        >
           Home
         </a>
-        <a href="/#About" className="py-2 hover:text-gray-600">
+        <a
+          href="/#About"
+          onClick={(e) => {
+            e.preventDefault();
+            handleNavClick("#About");
+          }}
+          className="py-2 hover:text-gray-600"
+        >
           About
         </a>
-        <a href="/#Menu" className="py-2 hover:text-gray-600">
+        <a
+          href="/#Menu"
+          onClick={(e) => {
+            e.preventDefault();
+            handleNavClick("#Menu");
+          }}
+          className="py-2 hover:text-gray-600"
+        >
           Menu
         </a>
-        <a href="/#Contact" className="py-2 hover:text-gray-600">
+        <a
+          href="/#Contact"
+          onClick={(e) => {
+            e.preventDefault();
+            handleNavClick("#Contact");
+          }}
+          className="py-2 hover:text-gray-600"
+        >
           Contact
         </a>
-        <a href="/#Reserve" className="py-2 hover:text-gray-600">
+        <a
+          href="/#Reserve"
+          onClick={(e) => {
+            e.preventDefault();
+            handleNavClick("#Reserve");
+          }}
+          className="py-2 hover:text-gray-600"
+        >
           Reserve
         </a>
         <a href="/gallery" className="py-2 hover:text-gray-600">
@@ -161,30 +257,55 @@ export default function Header() {
         >
           <a
             href="/#Home"
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavClick("#Home");
+              setShowMobileMenu(false);
+            }}
             className="py-2 hover:text-gray-600 w-full text-center md:w-auto"
           >
             Home
           </a>
           <a
             href="/#About"
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavClick("#About");
+              setShowMobileMenu(false);
+            }}
             className="py-2 hover:text-gray-600 w-full text-center md:w-auto"
           >
             About
           </a>
           <a
             href="/#Menu"
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavClick("#Menu");
+              setShowMobileMenu(false);
+            }}
             className="py-2 hover:text-gray-600 w-full text-center md:w-auto"
           >
             Menu
           </a>
           <a
             href="/#Contact"
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavClick("#Contact");
+              setShowMobileMenu(false);
+            }}
             className="py-2 hover:text-gray-600 w-full text-center md:w-auto"
           >
             Contact
           </a>
           <a
             href="/#Reserve"
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavClick("#Reserve");
+              setShowMobileMenu(false);
+            }}
             className="py-2 hover:text-gray-600 w-full text-center md:w-auto"
           >
             Reserve
