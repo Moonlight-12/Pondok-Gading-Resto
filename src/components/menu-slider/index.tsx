@@ -52,7 +52,6 @@ export default function MenuSlider() {
 
     preloadImages()
 
-    // Ensure we show the slider after a maximum timeout even if images fail
     const timer = setTimeout(() => {
       setIsLoading(false)
     }, 5000)
@@ -60,7 +59,6 @@ export default function MenuSlider() {
     return () => clearTimeout(timer)
   }, [images])
 
-  // Calculate loading percentage
   const loadingPercentage = Math.round((imagesLoaded / images.length) * 100)
 
   return (

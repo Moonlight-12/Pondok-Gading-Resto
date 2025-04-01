@@ -125,16 +125,17 @@ export default function Header() {
               Menu
             </a>
             <a
-              href="/#Contact"
+              href="/#Information"
               onClick={(e) => {
                 e.preventDefault();
-                handleNavClick("#Contact");
+                handleNavClick("#Information");
                 setShowMobileMenu(false);
               }}
               className="py-2 hover:text-gray-600 w-full text-center"
             >
-              Contact
+              Information
             </a>
+            
             <a
               href="/#Reserve"
               onClick={(e) => {
@@ -145,6 +146,17 @@ export default function Header() {
               className="py-2 hover:text-gray-600 w-full text-center"
             >
               Reserve
+            </a>
+            <a
+              href="/#Contact"
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClick("#Contact");
+                setShowMobileMenu(false);
+              }}
+              className="py-2 hover:text-gray-600 w-full text-center"
+            >
+              Contact
             </a>
             <a
               href="/gallery"
@@ -192,14 +204,14 @@ export default function Header() {
           Menu
         </a>
         <a
-          href="/#Contact"
+          href="/#Information"
           onClick={(e) => {
             e.preventDefault();
-            handleNavClick("#Contact");
+            handleNavClick("#Information");
           }}
           className="py-2 hover:text-gray-600"
         >
-          Contact
+          Information
         </a>
         <a
           href="/#Reserve"
@@ -210,6 +222,16 @@ export default function Header() {
           className="py-2 hover:text-gray-600"
         >
           Reserve
+        </a>
+        <a
+          href="/#Contact"
+          onClick={(e) => {
+            e.preventDefault();
+            handleNavClick("#Contact");
+          }}
+          className="py-2 hover:text-gray-600"
+        >
+          Contact
         </a>
         <a href="/gallery" className="py-2 hover:text-gray-600">
           Gallery
@@ -289,15 +311,15 @@ export default function Header() {
             Menu
           </a>
           <a
-            href="/#Contact"
+            href="/#Information"
             onClick={(e) => {
               e.preventDefault();
-              handleNavClick("#Contact");
+              handleNavClick("#Information");
               setShowMobileMenu(false);
             }}
             className="py-2 hover:text-gray-600 w-full text-center md:w-auto"
           >
-            Contact
+            Information
           </a>
           <a
             href="/#Reserve"
@@ -309,6 +331,17 @@ export default function Header() {
             className="py-2 hover:text-gray-600 w-full text-center md:w-auto"
           >
             Reserve
+          </a>
+          <a
+            href="/#Contact"
+            onClick={(e) => {
+              e.preventDefault();
+              handleNavClick("#Contact");
+              setShowMobileMenu(false);
+            }}
+            className="py-2 hover:text-gray-600 w-full text-center md:w-auto"
+          >
+            Contact
           </a>
           <a
             href="/gallery"

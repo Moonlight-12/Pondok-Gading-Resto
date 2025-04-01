@@ -2,7 +2,7 @@
 
 import { Calendar, Clock, Mail, Phone, User, Users } from "lucide-react";
 import { useState } from "react";
-import { sendReservationEmail } from "@/app/actions/email";
+import { sendReservationEmail } from "@/app/actions/reserve-email";
 import { toast, Toaster } from "sonner";
 
 export default function ReserveForm() {

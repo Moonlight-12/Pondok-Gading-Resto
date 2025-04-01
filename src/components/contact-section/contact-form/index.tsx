@@ -1,54 +1,161 @@
-"use client"
+"use client";
 
-import { useRef } from "react";
-import emailjs from "emailjs-com";
+import type React from "react";
+
+import { useRef, useState } from "react";
+import { toast } from "sonner";
+import { sendContactEmail } from "@/app/actions/contact-email";
 
 export default function ContactForm() {
-    const formRef = useRef(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const sendEmail = (e: React.FormEvent) => {
-        e.preventDefault();
+  const [formData, setFormData] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
 
-        emailjs.sendForm(
-            "your_service_id",     
-            "your_template_id",    
-            formRef.current!,
-            "your_user_id"        
-        )
-        .then(() => {
-            alert("Message sent successfully!");
-        }, (error) => {
-            alert("Failed to send message: " + error.text);
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  interface SendReservationEmailResult {
+    success: boolean;
+    message?: string;
+  }
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // Basic validation
+    if (
+      !formData.firstname ||
+      !formData.lastname ||
+      !formData.email ||
+      !formData.phone ||
+      !formData.message
+    ) {
+      toast.error("Missing information", {
+        description: "Please fill in all required fields.",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      
+      const result: SendReservationEmailResult = await sendContactEmail(
+        formData
+      );
+
+      if (result.success) {
+        toast.success("Message Submitted!", {
+          description: "We've received your feedback. Thank you!",
         });
-    };
 
-    return (
-        <div className="relative z-20 p-6 bg-white rounded-lg shadow-md text-black">
-            <form ref={formRef} onSubmit={sendEmail} className="space-y-6">
-                <div>
-                    <label htmlFor="first-name">First Name</label>
-                    <input type="text" name="first_name" required className="w-full border p-2 rounded" />
-                </div>
-                <div>
-                    <label htmlFor="last-name">Last Name</label>
-                    <input type="text" name="last_name" required className="w-full border p-2 rounded" />
-                </div>
-                <div>
-                    <label htmlFor="email">Email</label>
-                    <input type="email" name="email" required className="w-full border p-2 rounded" />
-                </div>
-                <div>
-                    <label htmlFor="mobile">Mobile Number</label>
-                    <input type="tel" name="mobile" required className="w-full border p-2 rounded" />
-                </div>
-                <div>
-                    <label htmlFor="message">Message</label>
-                    <textarea name="message" rows={4} className="w-full border p-2 rounded"></textarea>
-                </div>
-                <button type="submit" className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">
-                    Send Email
-                </button>
-            </form>
+        setFormData({
+          firstname: "",
+          lastname: "",
+          email: "",
+          phone: "",
+          message: "",
+        });
+      } else {
+        toast.error("Something went wrong", {
+          description: result.message,
+        });
+      }
+    } catch (error) {
+      toast.error("Error", {
+        description: "Failed to submit your message. Please try again.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="relative z-20 p-6 bg-white rounded-lg shadow-md text-black">
+      <form ref={formRef} onSubmit={handleSubmit} className="space-y-6">
+        <div>
+          <label htmlFor="firstname">First Name</label>
+          <input
+            type="text"
+            id="firstname"
+            name="firstname"
+            onChange={handleChange}
+            value={formData.firstname}
+            required
+            className="w-full border p-2 rounded"
+          />
         </div>
-    );
+        <div>
+          <label htmlFor="lastname">Last Name</label>
+          <input
+            type="text"
+            id="lastname"
+            name="lastname"
+            onChange={handleChange}
+            value={formData.lastname}
+            required
+            className="w-full border p-2 rounded"
+          />
+        </div>
+        <div>
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            onChange={handleChange}
+            value={formData.email}
+            required
+            className="w-full border p-2 rounded"
+          />
+        </div>
+        <div>
+          <label htmlFor="phone">Mobile Number</label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            onChange={handleChange}
+            value={formData.phone}
+            required
+            className="w-full border p-2 rounded"
+          />
+        </div>
+        <div>
+          <label htmlFor="message">Message</label>
+          <textarea
+            id="message"
+            name="message"
+            onChange={handleChange}
+            value={formData.message}
+            required
+            placeholder="Your message here..."
+            rows={4}
+            className="w-full border p-2 rounded"
+          ></textarea>
+        </div>
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 disabled:bg-indigo-400"
+        >
+          {isSubmitting ? "Sending..." : "Send Email"}
+        </button>
+      </form>
+    </div>
+  );
 }
