@@ -1,7 +1,5 @@
 "use client";
 
-import type React from "react";
-
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 import { sendContactEmail } from "@/app/actions/contact-email";
@@ -28,7 +26,7 @@ export default function ContactForm() {
     }));
   };
 
-  interface SendReservationEmailResult {
+  interface SendContactResult {
     success: boolean;
     message?: string;
   }
@@ -54,7 +52,7 @@ export default function ContactForm() {
 
     try {
       
-      const result: SendReservationEmailResult = await sendContactEmail(
+      const result: SendContactResult = await sendContactEmail(
         formData
       );
 
@@ -148,13 +146,15 @@ export default function ContactForm() {
             className="w-full border p-2 rounded"
           ></textarea>
         </div>
-        <button
-          type="submit"
-          disabled={isSubmitting}
-          className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 disabled:bg-indigo-400"
-        >
-          {isSubmitting ? "Sending..." : "Send Email"}
-        </button>
+        <div>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 disabled:bg-indigo-400"
+          >
+            {isSubmitting ? "Sending..." : "Send Email"}
+          </button>
+        </div>
       </form>
     </div>
   );
