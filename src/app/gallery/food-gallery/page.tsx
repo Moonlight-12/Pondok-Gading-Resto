@@ -3,6 +3,7 @@ import Image from "next/image";
 import fs from "fs";
 import path from "path";
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 export default async function FoodGallery() {
   const foodFolder = path.join(process.cwd(), "public", "food");
@@ -27,6 +28,7 @@ export default async function FoodGallery() {
           ))}
         </div>
       </div>
+      <Footer />
     </main>
   );
 }

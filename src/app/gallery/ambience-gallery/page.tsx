@@ -3,6 +3,7 @@ import Image from "next/image";
 import fs from "fs";
 import path from "path";
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 export default async function AmbienceGallery() {
   const ambienceFolder = path.join(process.cwd(), "public", "ambience");
@@ -70,6 +71,7 @@ export default async function AmbienceGallery() {
           ))}
         </div>
       </div>
+      <Footer />
     </main>
   );
 }

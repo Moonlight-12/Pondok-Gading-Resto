@@ -1,3 +1,4 @@
+import Footer from "@/components/footer";
 import { GalleryBackground } from "@/components/gallery-home/gallery-background";
 import GalleryButton from "@/components/gallery-home/gallery-button";
 import { GalleryOptions } from "@/components/gallery-home/gallery-options";
@@ -17,6 +18,7 @@ export default function GalleryPage() {
           <GalleryOptions />
         </div>
       </section>
+      <Footer />
     </main>
   );
 }
