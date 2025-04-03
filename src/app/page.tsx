@@ -9,12 +9,8 @@ import ReserveSection from "@/components/reserve-section";
 import MenuSlider from "@/components/menu-slider";
 
 //to do:
-// - change Logo
-// - Add social media
 // - Rooms pictures
-// - set limits to the reservation form
-// - add timeout to the reservation form to prevent spamming
-// - contact form is not done yet
+// - change link for menu button
 
 export default function Home() {
   return (
@@ -25,11 +21,11 @@ export default function Home() {
         <AboutUsButton />
       </section>
 
-      <section className="w-full bg-white py-8 relative" id="About">
+      <section className="w-full bg-black py-8 relative" id="About">
         <div className="container mx-auto flex flex-col md:flex-row justify-center items-center">
           <div className="flex flex-col items-center justify-center p-8">
             <div className="text-2xl font-bold text-[#FFD700]">About Us</div>
-            <div className="text-neutral-500 w-82 text-center">
+            <div className="text-neutral-100 w-82 text-center">
               Pondok Gading Resto merupakan satu satunya Tempat Makan dan Kedai
               Kopi berkelas Premium di jalan Raya Tlanjung Udik Gunung Putri.
               Menyediakan hidangan dengan menu masakan menggunakan resep
@@ -53,14 +49,14 @@ export default function Home() {
       </section>
 
       {/* Menu Section */}
-      <section className="w-full bg-neutral-900 py-8 relative" id="Menu">
+      <section className="w-full bg-white py-8 relative" id="Menu">
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-64">
           <div className="flex justify-center items-center">
             {/* <FlipGroupSwiper /> */}
             <MenuSlider />
           </div>
           <div className="flex flex-col justify-center items-center">
-            <div className="text-white text-center">Lihat menu disini</div>
+            <div className="text-black text-center">Lihat menu disini</div>
             <Link
               href="https://drive.google.com/drive/u/0/folders/1FrAqT7YYH8N2wWm2Qldcc-MKRAORBri3?sort=13&direction=a"
               className=" w-full flex justify-center"
@@ -73,8 +69,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="w-full bg-white  py-40 relative" id="Information">
-        <div className="flex justify-center text-black items-center text-2xl font-bold mb-12 ">
+      <section className="w-full bg-neutral-900  py-40 relative" id="Information">
+        <div className="flex justify-center text-[#FFD700] items-center text-2xl font-bold mb-12 ">
           Information
         </div>
 
@@ -85,21 +81,21 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="w-full bg-neutral-900 relative py-40" id="Reserve">
-        <div className="text-2xl text-[#FFD700] flex justify-center items-center mb-4">
+      <section className="w-full bg-neutral-100 relative py-40" id="Reserve">
+        <div className="text-2xl text-black flex justify-center items-center mb-4">
           Reservation
         </div>
 
         <ReserveSection />
       </section>
 
-      <section className="w-full bg-white py-40 relative" id="Contact">
+      <section className="w-full bg-neutral-900 py-40 relative" id="Contact">
         <div className="grid grid-cols-1 md:grid-cols-2 p-4">
           <div className="flex flex-col justify-center items-center text-center p-6">
-            <div className="text-2xl font-semibold mb-4 text-black">
+            <div className="text-2xl font-semibold mb-4 text-[#FFD700]">
               Contact
             </div>
-            <div className="text-black w-94">
+            <div className="text-white w-94">
               Jangan Ragu untuk memberitahukan kepada kami mengenai keinginan
               anda terhadap pelayanan kami. Kami akan menanggapinya dengan penuh
               sukacita, Silahkan Tinggalkan Pesan anda.
@@ -110,8 +106,8 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="relative z-20 bg-neutral-300 text-black p-8">
-        <div className="flex justify-between">
+      <footer className="relative z-20 bg-white text-black p-8">
+        <div className="flex justify-between flex-col md:flex-row">
           <div>© 2025 Pondok Gading Resto. All Rights Reserved.</div>
             <div className="flex items-center gap-4">
               <Link

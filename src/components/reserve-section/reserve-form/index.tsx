@@ -1,7 +1,7 @@
 "use client";
 
 import { Calendar, Clock, Mail, Phone, User, Users } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { sendReservationEmail } from "@/app/actions/reserve-email";
 import { toast, Toaster } from "sonner";
 
@@ -15,15 +15,32 @@ export default function ReserveForm() {
     phone: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [lastSubmitTime, setLastSubmitTime] = useState(0);
+  const [submitCount, setSubmitCount] = useState(0);
+  const [isBlocked, setIsBlocked] = useState(false);
+  const [blockTimer, setBlockTimer] = useState(0);
 
-  interface FormData {
-    guests: string;
-    name: string;
-    date: string;
-    email: string;
-    time: string;
-    phone: string;
-  }
+  // Reset submission count every hour
+  useEffect(() => {
+    const resetInterval = setInterval(() => {
+      setSubmitCount(0);
+    }, 60 * 60 * 1000); // 1 hour
+
+    return () => clearInterval(resetInterval);
+  }, []);
+
+  // Countdown timer for blocked status
+  useEffect(() => {
+    if (isBlocked && blockTimer > 0) {
+      const timer = setTimeout(() => {
+        setBlockTimer(blockTimer - 1);
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    } else if (blockTimer === 0 && isBlocked) {
+      setIsBlocked(false);
+    }
+  }, [blockTimer, isBlocked]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -33,15 +50,6 @@ export default function ReserveForm() {
     }));
   };
 
-  interface ReservationFormData {
-    guests: string;
-    name: string;
-    date: string;
-    email: string;
-    time: string;
-    phone: string;
-  }
-
   interface SubmitEvent extends React.FormEvent<HTMLFormElement> {}
 
   interface SendReservationEmailResult {
@@ -49,10 +57,55 @@ export default function ReserveForm() {
     message?: string;
   }
 
+  const getTodayDate = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  const [honeypot, setHoneypot] = useState("");
+  const handleHoneypotChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setHoneypot(e.target.value);
+  };
+
   const handleSubmit = async (e: SubmitEvent) => {
     e.preventDefault();
 
-    // Basic validation
+    // Check if the form is blocked from submissions
+    if (isBlocked) {
+      toast.error("Too many attempts", {
+        description: `Please try again in ${blockTimer} seconds.`,
+      });
+      return;
+    }
+
+    if (honeypot) {
+      console.log("Honeypot triggered");
+      setIsBlocked(true);
+      setBlockTimer(60);
+      return;
+    }
+
+    const now = Date.now();
+    if (now - lastSubmitTime < 3000) {
+      toast.error("Please slow down", {
+        description: "You're submitting too quickly.",
+      });
+      return;
+    }
+
+    if (submitCount >= 5) {
+      toast.error("Submission limit reached", {
+        description:
+          "You've reached the maximum number of submissions per hour.",
+      });
+      setIsBlocked(true);
+      setBlockTimer(300);
+      return;
+    }
+
     if (
       !formData.name ||
       !formData.email ||
@@ -66,10 +119,55 @@ export default function ReserveForm() {
       return;
     }
 
+    const guestsNumber = parseInt(formData.guests);
+    if (isNaN(guestsNumber) || guestsNumber < 1 || guestsNumber > 10) {
+      toast.error("Invalid guest count", {
+        description: "Please enter a number between 1 and 10 guests.",
+      });
+      return;
+    }
+
+    const selectedDate = new Date(formData.date);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    if (selectedDate < today) {
+      toast.error("Invalid date", {
+        description: "Please select a date that is today or in the future.",
+      });
+      return;
+    }
+
+    const timeHour = parseInt(formData.time.split(":")[0]);
+    const timeMinute = parseInt(formData.time.split(":")[1]);
+    const timeInMinutes = timeHour * 60 + timeMinute;
+    const openingTimeInMinutes = 10 * 60;
+    const closingTimeInMinutes = 19 * 60 + 30;
+
+    if (
+      timeInMinutes < openingTimeInMinutes ||
+      timeInMinutes > closingTimeInMinutes
+    ) {
+      toast.error("Invalid time", {
+        description: "Our operating hours are 10:00 AM to 7:30 PM.",
+      });
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast.error("Invalid email format", {
+        description: "Please enter a valid email address.",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-      // Send the email using the server action
+      await new Promise((resolve) =>
+        setTimeout(resolve, Math.floor(Math.random() * 1000) + 500)
+      );
+
       const result: SendReservationEmailResult = await sendReservationEmail(
         formData
       );
@@ -79,7 +177,6 @@ export default function ReserveForm() {
           description: "We've received your reservation request.",
         });
 
-        // Reset the form
         setFormData({
           guests: "",
           name: "",
@@ -88,6 +185,9 @@ export default function ReserveForm() {
           time: "",
           phone: "",
         });
+
+        setLastSubmitTime(Date.now());
+        setSubmitCount((prev) => prev + 1);
       } else {
         toast.error("Something went wrong", {
           description: result.message,
@@ -110,6 +210,17 @@ export default function ReserveForm() {
         onSubmit={handleSubmit}
         className="grid grid-cols-1 md:grid-cols-3 gap-6"
       >
+        <div className="hidden">
+          <input
+            type="text"
+            name="website"
+            id="website"
+            value={honeypot}
+            onChange={handleHoneypotChange}
+            autoComplete="off"
+          />
+        </div>
+
         {/* Column 1 */}
         <div>
           <div className="mb-4">
@@ -123,13 +234,18 @@ export default function ReserveForm() {
               <input
                 id="guests"
                 type="number"
+                min="1"
+                max="10"
                 value={formData.guests}
                 onChange={handleChange}
                 className="w-full pl-10 p-2 rounded bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="e.g. 4"
+                placeholder="1-10 guests"
                 required
               />
             </div>
+            <p className="text-xs mt-1 text-gray-400">
+              Maximum 10 guests per reservation
+            </p>
           </div>
 
           <div className="mb-4">
@@ -148,6 +264,8 @@ export default function ReserveForm() {
                 className="w-full pl-10 p-2 rounded bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Your full name"
                 required
+                minLength={2}
+                maxLength={50}
               />
             </div>
           </div>
@@ -166,12 +284,16 @@ export default function ReserveForm() {
               <input
                 id="date"
                 type="date"
+                min={getTodayDate()}
                 value={formData.date}
                 onChange={handleChange}
                 className="w-full pl-10 p-2 rounded bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
+            <p className="text-xs mt-1 text-gray-400">
+              Select today or a future date
+            </p>
           </div>
 
           <div className="mb-4">
@@ -190,6 +312,8 @@ export default function ReserveForm() {
                 className="w-full pl-10 p-2 rounded bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="example@mail.com"
                 required
+                pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
+                title="Please enter a valid email address"
               />
             </div>
           </div>
@@ -208,12 +332,17 @@ export default function ReserveForm() {
               <input
                 id="time"
                 type="time"
+                min="10:00"
+                max="19:30"
                 value={formData.time}
                 onChange={handleChange}
                 className="w-full pl-10 p-2 rounded bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 required
               />
             </div>
+            <p className="text-xs mt-1 text-gray-400">
+              Available from 10:00 AM to 7:30 PM
+            </p>
           </div>
 
           <div className="mb-4">
@@ -240,10 +369,18 @@ export default function ReserveForm() {
         <div className="col-span-1 md:col-span-3 mt-8 text-center">
           <button
             type="submit"
-            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
-            disabled={isSubmitting}
+            className={`px-6 py-2 rounded transition ${
+              isBlocked
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 text-white hover:bg-blue-700"
+            }`}
+            disabled={isSubmitting || isBlocked}
           >
-            {isSubmitting ? "Submitting..." : "Reserve Table"}
+            {isSubmitting
+              ? "Submitting..."
+              : isBlocked
+              ? `Try again in ${blockTimer}s`
+              : "Reserve Table"}
           </button>
         </div>
       </form>
